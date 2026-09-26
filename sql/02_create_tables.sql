@@ -162,7 +162,21 @@ SHOW VARIABLES LIKE 'secure_file_priv';
 -- Check whether LOCAL INFILE is enabled.
 SHOW VARIABLES LIKE 'local_infile';
 
-
 -- Enable LOCAL INFILE for the current MySQL server session.
 -- Required when using LOAD DATA LOCAL INFILE.
 SET GLOBAL local_infile = 1;
+INSERT INTO category_translation
+    (product_category_name, product_category_name_english)
+VALUES
+    ('pc_gamer', 'gaming computer'),
+    ('portateis_cozinha_e_preparadores_de_alimentos', 'portable kitchen and food preparers');
+    
+SELECT
+    COUNT(*) AS total,
+    SUM(product_category_name IS NULL) AS null_categories,
+    SUM(product_category_name = '') AS empty_categories
+FROM products;
+
+UPDATE products
+SET product_category_name = NULL
+WHERE product_category_name = '';
